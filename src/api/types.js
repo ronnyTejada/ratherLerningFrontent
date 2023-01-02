@@ -1,4 +1,4 @@
-const baseDomain = 'http://localhost:3000'
+const baseDomain = 'https://lerningbackend2.onrender.com'
 const baseUrl = `${baseDomain}/api/`
 
 export const LOGIN = baseUrl+'login'
