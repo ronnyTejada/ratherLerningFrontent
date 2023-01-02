@@ -1,0 +1,13 @@
+export const CREATE_COURSE = "CREATE_COURSE";
+export const GET_COURSES = "GET_COURSES";
+export const GET_COURSE_BY_ID = "GET_COURSE_BY_ID";
+export const ADD_STUDENT = "ADD_STUDENT";
+export const ADD_STUDENT_TO_COURSE = "ADD_STUDENT_TO_COURSE";
+export const GET_STUDENTS_BY_COURSE = "GET_STUDENTS_BY_COURSE";
+export const GET_STUDENT_BY_ID = "GET_STUDENT_BY_ID";
+export const GET_ALL_STUDENTS = "GET_ALL_STUDENTS"
+export const ADMIN_LOGGED = "ADMIN_LOGGED";
+export const ERROR = "ERROR";
+export const DELETE_COURSE = 'DELETE_COURSE'
+export const EDIT_COURSE = 'DELETE_COURSE'
+export const LOGOUT = 'LOGOUT'
