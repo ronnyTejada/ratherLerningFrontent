@@ -9,14 +9,23 @@ import MyContext from "../../context/Context";
 const Wrapper = styled.div`
   height: 100vh;
   display: flex;
+  flex-direction: column;
+  justify-items: space-around;
   justify-content: center;
   align-items: center;
 `;
 
+const TextWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+`
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login,logged } = useContext(MyContext);
+  const { login, logged } = useContext(MyContext);
   let navigate = useNavigate();
 
   const handleEmail = (event) => {
@@ -27,10 +36,13 @@ const Login = () => {
     setPassword(event.target.value);
   };
 
-  useEffect(()=>{
-    if(logged)
-      navigate('/dashboard')
-  },[logged])
+  useEffect(() => {
+    if (logged) {
+      navigate("/dashboard");
+    } else {
+      alert('user: admin, password: admin')
+    }
+  }, [logged]);
 
   return (
     <Wrapper>
@@ -47,6 +59,11 @@ const Login = () => {
         <br />
         <Button text="Login" onClick={() => login(email, password, navigate)} />
       </Form>
+
+      <TextWrapper>
+        <a href="https://github.com/ronnyTejada/ratherLerningFrontent" target='_blank'>codigo frontend</a>
+        <a href="https://github.com/ronnyTejada/ratherlerningbackend" target='_blank'>codigo backend</a>
+      </TextWrapper>
     </Wrapper>
   );
 };
