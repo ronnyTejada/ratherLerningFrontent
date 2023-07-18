@@ -9,13 +9,13 @@ import {
   ADMIN_LOGGED,
   ERROR,
   DELETE_COURSE,
-  LOGOUT
+  LOGOUT,
 } from "./Types";
 export default function State(props) {
   const initialState = {
     courses: [],
     students: [],
-    student:null,
+    student: null,
     logged: localStorage.getItem("logged") ?? false,
     currentCourse: null,
     showError: false,
@@ -23,15 +23,18 @@ export default function State(props) {
 
   const [state, dispatch] = useReducer(Reducer, initialState);
 
-  const login = async (email, password) => {
+  const login = async (email, password, setLoading) => {
+    setLoading(true);
     let response = await ApiService.loginUser(email, password);
     if (response.status) {
+      setLoading(false);
       localStorage.setItem("logged", true);
       dispatch({
         type: ADMIN_LOGGED,
         payload: response.status,
       });
     } else {
+      setLoading(false);
       dispatch({
         type: ERROR,
         payload: true,
@@ -39,41 +42,38 @@ export default function State(props) {
     }
   };
 
-  const logout=()=>{
-    localStorage.removeItem('logged')
+  const logout = () => {
+    localStorage.removeItem("logged");
     dispatch({
-      type:ADMIN_LOGGED,
-      payload:false
-    })
-  }
+      type: ADMIN_LOGGED,
+      payload: false,
+    });
+  };
 
-  const createCourse = async (course,navigate) => {
+  const createCourse = async (course, navigate) => {
     let response = await ApiService.createCourse(course);
     if (response.status) {
       dispatch({
         type: CREATE_COURSE,
         payload: course,
       });
-      navigate('/dashboard')
-
+      navigate("/dashboard");
     }
-    
   };
 
-  const deleteCourse = async (courseId,navigate)=>{
-    let toDelete = window.confirm('do you want delete this course')
-    if(toDelete){
-      let response = await ApiService.deleteCourse(courseId)
-      if(response.status){
+  const deleteCourse = async (courseId, navigate) => {
+    let toDelete = window.confirm("do you want delete this course");
+    if (toDelete) {
+      let response = await ApiService.deleteCourse(courseId);
+      if (response.status) {
         dispatch({
           type: DELETE_COURSE,
           payload: null,
         });
-        navigate('/dashboard')
+        navigate("/dashboard");
       }
     }
-  }
-
+  };
 
   const getCourses = () => {
     ApiService.getCourses(dispatch);
@@ -98,16 +98,16 @@ export default function State(props) {
   };
 
   const getStudentsByCourse = (id) => {
-    ApiService.getStudentByCourse(id,dispatch)
+    ApiService.getStudentByCourse(id, dispatch);
   };
 
   const getStudentsById = (id) => {
-    ApiService.getStudentById(id,dispatch)
+    ApiService.getStudentById(id, dispatch);
   };
 
-  const getAllStudents = () =>{
-    ApiService.getStudents(dispatch)
-  }
+  const getAllStudents = () => {
+    ApiService.getStudents(dispatch);
+  };
 
   return (
     <MyContext.Provider
@@ -115,8 +115,8 @@ export default function State(props) {
         courses: state.courses,
         currentCourse: state.currentCourse,
         logged: state.logged,
-        students:state.students,
-        student:state.student,
+        students: state.students,
+        student: state.student,
         createCourse,
         getCourseById,
         addStudent,
@@ -126,7 +126,7 @@ export default function State(props) {
         getStudentsById,
         getAllStudents,
         deleteCourse,
-        logout
+        logout,
       }}
     >
       {props.children}

@@ -20,11 +20,12 @@ const TextWrapper = styled.div`
   bottom: 0;
   display: flex;
   flex-direction: column;
-`
+`;
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const { login, logged } = useContext(MyContext);
   let navigate = useNavigate();
 
@@ -40,7 +41,7 @@ const Login = () => {
     if (logged) {
       navigate("/dashboard");
     } else {
-      alert('user: admin, password: admin')
+      alert("user: admin, password: admin");
     }
   }, [logged]);
 
@@ -57,12 +58,28 @@ const Login = () => {
           placeholder="Password:"
         />
         <br />
-        <Button text="Login" onClick={() => login(email, password, navigate)} />
+        {!loading && (
+          <Button
+            text="Login"
+            onClick={() => login(email, password,setLoading)}
+          />
+        )}
+        {loading && <Button text="Loading" onClick={() => ""} />}
       </Form>
 
       <TextWrapper>
-        <a href="https://github.com/ronnyTejada/ratherLerningFrontent" target='_blank'>codigo frontend</a>
-        <a href="https://github.com/ronnyTejada/ratherlerningbackend" target='_blank'>codigo backend</a>
+        <a
+          href="https://github.com/ronnyTejada/ratherLerningFrontent"
+          target="_blank"
+        >
+          codigo frontend
+        </a>
+        <a
+          href="https://github.com/ronnyTejada/ratherlerningbackend"
+          target="_blank"
+        >
+          codigo backend
+        </a>
       </TextWrapper>
     </Wrapper>
   );
